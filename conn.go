@@ -4,6 +4,7 @@ package udp
 import (
 	"context"
 	"errors"
+	"log"
 	"net"
 	"sync"
 	"sync/atomic"
@@ -197,6 +198,7 @@ func (l *listener) getConn(raddr net.Addr, buf []byte) (*Conn, bool, error) {
 			}
 		}
 		conn = l.newConn(raddr)
+		log.Printf("getConn raddr(%s)", raddr.String())
 		select {
 		case l.acceptCh <- conn:
 			l.conns[raddr.String()] = conn
